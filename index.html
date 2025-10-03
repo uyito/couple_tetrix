@@ -10,29 +10,53 @@
     <div class="game-container">
         <div class="game-header">
             <h1>💕 Love Tetris 💕</h1>
+            <p>A romantic twist on the classic puzzle game</p>
+        </div>
+
+        <div id="gamePauseBar" class="game-pause-bar hidden">
+            <button id="pauseBarBtn" class="pause-bar-btn">⏸ Pause</button>
         </div>
 
         <div class="game-content">
-            <div class="side-panel">
-                <div class="info-box">
-                    <h3>Score</h3>
-                    <div id="score" class="score-display">0</div>
+            <div class="left-column">
+                <div class="side-panel">
+                    <div class="info-box stats-box">
+                        <div class="stat-item">
+                            <h3>Score</h3>
+                            <div id="score" class="score-display">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Level</h3>
+                            <div id="level" class="level-display">1</div>
+                            <div id="levelName" class="level-name">Puppy Love</div>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Lines</h3>
+                            <div id="lines" class="lines-display">0</div>
+                        </div>
+                    </div>
+
+                    <div class="info-box next-piece-box">
+                        <h3>Next Love</h3>
+                        <canvas id="nextCanvas" width="120" height="120"></canvas>
+                    </div>
                 </div>
 
-                <div class="info-box">
-                    <h3>Level</h3>
-                    <div id="level" class="level-display">1</div>
-                    <div id="levelName" class="level-name">Puppy Love</div>
-                </div>
-
-                <div class="info-box">
-                    <h3>Lines</h3>
-                    <div id="lines" class="lines-display">0</div>
-                </div>
-
-                <div class="info-box next-piece-box">
-                    <h3>Next Love</h3>
-                    <canvas id="nextCanvas" width="120" height="120"></canvas>
+                <div class="mobile-controls">
+                    <div class="control-row">
+                        <button id="pauseBtn" class="control-btn pause-btn">⏸</button>
+                    </div>
+                    <div class="control-row">
+                        <button id="rotateBtn" class="control-btn">↻</button>
+                    </div>
+                    <div class="control-row">
+                        <button id="leftBtn" class="control-btn">←</button>
+                        <button id="downBtn" class="control-btn">↓</button>
+                        <button id="rightBtn" class="control-btn">→</button>
+                    </div>
+                    <div class="control-row">
+                        <button id="dropBtn" class="control-btn drop-btn">Drop</button>
+                    </div>
                 </div>
             </div>
 
@@ -46,16 +70,24 @@
                 <div id="pauseScreen" class="pause-screen hidden">
                     <h2>Paused</h2>
                     <p>Press P to resume</p>
+                    <button id="restartFromPauseBtn" class="restart-btn">Start New Game</button>
                 </div>
                 <div id="levelUpNotification" class="level-up-notification hidden">
                     <h2>Level Up! 💕</h2>
                     <p id="levelUpName">First Date</p>
                 </div>
                 <div id="startScreen" class="start-screen">
-                    <h2>Love Tetris</h2>
-                    <p>Use arrow keys to move</p>
-                    <p>↑ to rotate, ↓ for soft drop</p>
-                    <p>Space for hard drop</p>
+                    <h2>💕 Ready to Play? 💕</h2>
+                    <div class="instructions">
+                        <p><strong>Desktop Controls:</strong></p>
+                        <p>← → Move pieces | ↑ Rotate</p>
+                        <p>↓ Soft drop | Space Hard drop</p>
+                        <p>P Pause game</p>
+                    </div>
+                    <div class="instructions">
+                        <p><strong>Mobile Controls:</strong></p>
+                        <p>Use buttons or swipe gestures</p>
+                    </div>
                     <button id="startBtn" class="start-btn">Start Game</button>
                 </div>
             </div>
@@ -64,23 +96,6 @@
         <div class="controls-info">
             <p><strong>Desktop:</strong> ← → Move | ↑ Rotate | ↓ Soft Drop | Space Hard Drop | P Pause</p>
             <p><strong>Mobile:</strong> Swipe to move/rotate | Tap to drop</p>
-        </div>
-
-        <div class="mobile-controls">
-            <div class="control-row">
-                <button id="pauseBtn" class="control-btn pause-btn">⏸</button>
-            </div>
-            <div class="control-row">
-                <button id="rotateBtn" class="control-btn">↻</button>
-            </div>
-            <div class="control-row">
-                <button id="leftBtn" class="control-btn">←</button>
-                <button id="downBtn" class="control-btn">↓</button>
-                <button id="rightBtn" class="control-btn">→</button>
-            </div>
-            <div class="control-row">
-                <button id="dropBtn" class="control-btn drop-btn">Drop</button>
-            </div>
         </div>
     </div>
 

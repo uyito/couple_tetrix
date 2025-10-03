@@ -113,7 +113,7 @@ class Piece {
                     // Draw one word per block
                     if (this.statement && this.statement[blockIndex]) {
                         context.fillStyle = '#ffffff';
-                        context.font = `bold ${blockSize / 5}px Arial`;
+                        context.font = `bold ${blockSize / 4}px Arial`;
                         context.textAlign = 'center';
                         context.textBaseline = 'middle';
                         context.fillText(this.statement[blockIndex], x + blockSize / 2, y + blockSize / 2);
@@ -261,6 +261,18 @@ function init() {
         togglePause();
     });
 
+    document.getElementById('pauseBarBtn').addEventListener('click', () => {
+        togglePause();
+    });
+
+    document.getElementById('restartFromPauseBtn').addEventListener('click', () => {
+        gamePaused = false;
+        document.getElementById('pauseScreen').classList.add('hidden');
+        const pauseBarBtn = document.getElementById('pauseBarBtn');
+        pauseBarBtn.textContent = '⏸ Pause';
+        restartGame();
+    });
+
     // Touch swipe controls on canvas
     canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
     canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -269,6 +281,11 @@ function init() {
 
 function startGame() {
     document.getElementById('startScreen').classList.add('hidden');
+    document.getElementById('gamePauseBar').classList.remove('hidden');
+
+    // Enter fullscreen mode
+    enterFullscreen();
+
     gameRunning = true;
     score = 0;
     level = 1;
@@ -289,6 +306,34 @@ function startGame() {
 
     lastTime = 0;
     gameLoop = requestAnimationFrame(update);
+}
+
+function enterFullscreen() {
+    document.body.classList.add('fullscreen');
+
+    // Try to use browser fullscreen API
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(err => {
+            console.log('Fullscreen not available, using CSS fullscreen instead');
+        });
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    document.body.classList.remove('fullscreen');
+
+    if (document.exitFullscreen) {
+        document.exitFullscreen().catch(err => {});
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
 }
 
 function restartGame() {
@@ -368,7 +413,7 @@ function draw() {
                 // Draw text on merged blocks
                 if (boardText[row][col]) {
                     ctx.fillStyle = '#ffffff';
-                    ctx.font = `bold ${BLOCK_SIZE / 5}px Arial`;
+                    ctx.font = `bold ${BLOCK_SIZE / 4}px Arial`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText(boardText[row][col], col * BLOCK_SIZE + BLOCK_SIZE / 2, row * BLOCK_SIZE + BLOCK_SIZE / 2);
@@ -490,15 +535,18 @@ function togglePause() {
 
     gamePaused = !gamePaused;
     const pauseScreen = document.getElementById('pauseScreen');
+    const pauseBarBtn = document.getElementById('pauseBarBtn');
 
     if (gamePaused) {
         pauseScreen.classList.remove('hidden');
         cancelAnimationFrame(gameLoop);
+        pauseBarBtn.textContent = '▶ Resume';
     } else {
         pauseScreen.classList.add('hidden');
         lastTime = performance.now();
         dropCounter = 0;
         gameLoop = requestAnimationFrame(update);
+        pauseBarBtn.textContent = '⏸ Pause';
     }
 }
 
@@ -559,6 +607,8 @@ function gameOver() {
     cancelAnimationFrame(gameLoop);
     document.getElementById('finalScore').textContent = score;
     document.getElementById('gameOver').classList.remove('hidden');
+    document.getElementById('gamePauseBar').classList.add('hidden');
+    exitFullscreen();
 }
 
 // Touch gesture handlers
