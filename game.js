@@ -257,9 +257,12 @@ function init() {
         }
     });
 
-    document.getElementById('pauseBtn').addEventListener('click', () => {
-        togglePause();
-    });
+    const pauseBtnElement = document.getElementById('pauseBtn');
+    if (pauseBtnElement) {
+        pauseBtnElement.addEventListener('click', () => {
+            togglePause();
+        });
+    }
 
     document.getElementById('pauseBarBtn').addEventListener('click', () => {
         togglePause();
